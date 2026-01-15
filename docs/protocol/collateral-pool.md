@@ -33,9 +33,9 @@ In the initial phase, a collateral cap of 10M HYPE has been established to ensur
 
 The entirety of the Collateral Pool is represented by the following identity:
 
-```
-Total Collateral Value = hzUSD Supply + Residual Equity (bullHYPE Value)
-```
+$$
+\text{Total Collateral Value} = \text{hzUSD Supply} + \text{Residual Equity (bullHYPE Value)}
+$$
 
 Here, Residual Equity corresponds to the underlying value of the Leveraged HYPE Token (bullHYPE), with leverage effects dynamically changing based on pool fluctuations. This structure enables natural profit and loss distribution without requiring liquidation.
 

@@ -15,9 +15,9 @@ It is tied to the **Residual Equity** of the Collateral Pool, reflecting pool-wi
 
 The Collateral Pool in Hypezion Finance is always expressed by the following equation:
 
-```
-Collateral TVL = MC(hzUSD) + MC(bullHYPE)
-```
+$$
+\text{Collateral TVL} = MC_{hzUSD} + MC_{bullHYPE}
+$$
 
 Where:
 
@@ -34,9 +34,9 @@ When Collateral appreciates, the price of bullHYPE accelerates upward, while dur
 
 bullHYPE achieves leverage effects without external borrowing, futures positions, or funding costs. Its leverage ratio is not fixed but automatically changes according to pool conditions.
 
-```
-Effective Leverage = Collateral TVL / MC(bullHYPE)
-```
+$$
+\text{Effective Leverage} = \frac{\text{Collateral TVL}}{MC_{bullHYPE}}
+$$
 
 * hzUSD supply increases (stability prioritized) → Residual value decreases → bullHYPE leverage increases
 * hzUSD redemption progresses (asset capacity increases) → Residual value increases → bullHYPE leverage decreases
@@ -49,9 +49,9 @@ As a result, it becomes a token that automatically reconstitutes leverage accord
 
 The price of bullHYPE is expressed as follows based on the Collateral Pool's total value and stable token supply:
 
-```
-P_bullHYPE = (Collateral TVL - hzUSD Supply) / bullHYPE Supply
-```
+$$
+P_{bullHYPE} = \frac{\text{Collateral TVL} - \text{hzUSD Supply}}{\text{bullHYPE Supply}}
+$$
 
 Therefore, if Collateral appreciates, P_bullHYPE surges rapidly, and conversely declines sharply during downturns.
 

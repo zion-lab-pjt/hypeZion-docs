@@ -29,45 +29,45 @@ These modes are designed to transition continuously, with each mode switch autom
 
 **(1) Coverage Ratio (CR)**
 
-```
-CR = Collateral TVL / hzUSD Supply
-```
+$$
+CR = \frac{\text{Collateral TVL}}{\text{hzUSD Supply}}
+$$
 
 * Basic indicator showing system-wide collateral health.
 * Issuance restricted below 100%, transitions to Volatile Mode around 90%.
 
 **(2) Buffer Ratio (BR)**
 
-```
-BR = (Collateral TVL - hzUSD Supply) / Collateral TVL
-```
+$$
+BR = \frac{\text{Collateral TVL} - \text{hzUSD Supply}}{\text{Collateral TVL}}
+$$
 
 * Indicator representing residual collateral proportion, directly linked to bullHYPE risk tolerance.
 * When declining, bullHYPE issuance is restricted and shzUSD reward ratio increases.
 
 **(3) Peg Deviation (PD)**
 
-```
-PD = |P_hzUSD - 1.00|
-```
+$$
+PD = |P_{hzUSD} - 1.00|
+$$
 
 * Deviation rate showing how far hzUSD market price is from the peg ($1).
 * When PD exceeds threshold, fees and caps are dynamically adjusted.
 
 **(4) Oracle Confidence (OC)**
 
-```
-OC = 1 - |Primary - Fallback| / Primary
-```
+$$
+OC = 1 - \frac{|\text{Primary} - \text{Fallback}|}{\text{Primary}}
+$$
 
 * Indicator measuring agreement between oracles.
 * When OC falls below a certain value, automatically transitions to Volatile Mode and temporarily restricts new Mints.
 
 **(5) Utilization (U)**
 
-```
-U = hzUSD Supply / hzUSD Cap
-```
+$$
+U = \frac{\text{hzUSD Supply}}{\text{hzUSD Cap}}
+$$
 
 * Utilization rate against hzUSD issuance cap.
 * If too high, fees automatically increase and Mint suppression is applied.
@@ -78,11 +78,13 @@ U = hzUSD Supply / hzUSD Cap
 
 Modes automatically change based on composite conditions of the above indicators.
 
-```
-if CR > 110% and PD < 0.005 → Normal Mode
-if 95% ≤ CR ≤ 110% or PD ≥ 0.005 → Volatile Mode
-if CR < 95% or OC < 0.9 → Halt Mode
-```
+$$
+\begin{aligned}
+&\text{if } CR > 110\% \text{ and } PD < 0.005 \Rightarrow \text{Normal Mode} \\
+&\text{if } 95\% \leq CR \leq 110\% \text{ or } PD \geq 0.005 \Rightarrow \text{Volatile Mode} \\
+&\text{if } CR < 95\% \text{ or } OC < 0.9 \Rightarrow \text{Halt Mode}
+\end{aligned}
+$$
 
 **Normal → Volatile**
 
@@ -121,10 +123,12 @@ This ensures the protocol always maintains behavior that "prioritizes health ove
 
 Modes & Ratios is the core circuit for realizing system autonomy and stability.
 
-```
-CR ↓ ⇒ Mint restricted & Fee increases ⇒ Supply decreases ⇒ CR recovers
-PD ↑ ⇒ Redeem promoted & Cap adjusted ⇒ Price reverts ⇒ PD decreases
-```
+$$
+\begin{aligned}
+&CR \downarrow \Rightarrow \text{Mint restricted \& Fee increases} \Rightarrow \text{Supply decreases} \Rightarrow CR \uparrow \\
+&PD \uparrow \Rightarrow \text{Redeem promoted \& Cap adjusted} \Rightarrow \text{Price reverts} \Rightarrow PD \downarrow
+\end{aligned}
+$$
 
 Through this feedback control, the peg is maintained without external operations.
 

@@ -23,9 +23,9 @@ Users who deposit into this pool receive shzUSD in return.
 
 The price of shzUSD is defined by its share ratio relative to the SP's total asset value:
 
-```
-P_shzUSD = Total SP Value / Total shzUSD Supply
-```
+$$
+P_{shzUSD} = \frac{\text{Total SP Value}}{\text{Total shzUSD Supply}}
+$$
 
 ---
 
@@ -84,9 +84,9 @@ Through this sequence, overall stability is restored without individual liquidat
 
 The per-token value of shzUSD is defined by the following formula:
 
-```
-V_shzUSD = SP Assets (Collateral + Fees + Rewards) / shzUSD Supply
-```
+$$
+V_{shzUSD} = \frac{\text{SP Assets (Collateral + Fees + Rewards)}}{\text{shzUSD Supply}}
+$$
 
 SP's NAV is re-evaluated at each event, and through:
 
@@ -128,8 +128,8 @@ All of these are recorded in event logs and traceable via block explorers.
 
 The Stability Pool is a critical component for the proper operation of Hypezion Finance overall.
 
-```
-CR ↓ ⇒ SP Activation ⇒ Loss Absorption ⇒ NAV Recovery ⇒ CR ↑
-```
+$$
+CR \downarrow \Rightarrow \text{SP Activation} \Rightarrow \text{Loss Absorption} \Rightarrow \text{NAV Recovery} \Rightarrow CR \uparrow
+$$
 
 By operating this cycle autonomously, the entire system maintains stability against market volatility without cascading liquidations.

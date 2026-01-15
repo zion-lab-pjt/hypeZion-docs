@@ -83,11 +83,13 @@ During price fluctuations, the Stability Pool absorbs gains and losses to mainta
 
 ## 6. Value Maintenance Formula Model
 
-```
-Peg Condition:
-  - Mint Allowed, if CR > CR_min
-  - Redeem Premium, if CR < CR_min
-```
+$$
+\begin{aligned}
+&\textbf{Peg Condition:} \\
+&\text{Mint Allowed, if } CR > CR_{min} \\
+&\text{Redeem Premium, if } CR < CR_{min}
+\end{aligned}
+$$
 
 Here, CR (Coverage Ratio) is an indicator representing the health of the Collateral Pool and serves as the core parameter for peg maintenance, monitored under Modes & Ratios.
 
@@ -117,10 +119,12 @@ These multiple parameters automatically suppress mass issuance and excessive red
 
 As a result, the following loop operates to form a consistent hzUSD peg cycle across price, supply, and collateral:
 
-```
-Collateral ↑ → CR ↑ → Mint allowed → Supply increases → Price ↓ → Peg stabilizes
-Collateral ↓ → CR ↓ → Mint restricted → Redemption prioritized → Supply decreases → Peg stabilizes
-```
+$$
+\begin{aligned}
+&\text{Collateral} \uparrow \rightarrow CR \uparrow \rightarrow \text{Mint allowed} \rightarrow \text{Supply} \uparrow \rightarrow \text{Price} \downarrow \rightarrow \text{Peg stabilizes} \\
+&\text{Collateral} \downarrow \rightarrow CR \downarrow \rightarrow \text{Mint restricted} \rightarrow \text{Redemption prioritized} \rightarrow \text{Supply} \downarrow \rightarrow \text{Peg stabilizes}
+\end{aligned}
+$$
 
 ---
 
