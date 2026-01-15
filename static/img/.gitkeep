@@ -1,0 +1,13 @@
+# Placeholder for static images
+# Move images from .gitbook/assets/ to this directory and rename them appropriately:
+#
+# Example mappings:
+# - image (6).png -> hypezion-architecture.png
+# - image (7).png -> two-tokens-one-pool.png
+# - image (4).png -> collateral-pool.png
+# - Hypezion_Architecture.png -> keep as is
+#
+# Also add:
+# - logo.svg (your logo)
+# - favicon.ico (browser favicon)
+# - hypezion-social-card.png (for social media sharing)

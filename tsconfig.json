@@ -1,0 +1,13 @@
+{
+  "extends": "@docusaurus/module-type-aliases",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "strict": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ESNext",
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  }
+}
