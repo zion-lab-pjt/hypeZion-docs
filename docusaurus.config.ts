@@ -103,7 +103,7 @@ const config: Config = {
           items: [
             {
               label: 'Twitter',
-              href: 'https://twitter.com/hypezion',
+              href: 'https://x.com/0xHypezion',
             }
           ],
         },
