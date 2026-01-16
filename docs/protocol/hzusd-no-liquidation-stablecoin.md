@@ -15,10 +15,10 @@ hzUSD maintains stability based on system-wide health rather than individual acc
 
 This design yields the following characteristics:
 
-* **No Liquidation**: Positions are not force-liquidated during price declines; the Hyper Stability Module absorbs losses across the protocol (including the Stability Pool) and HYPE Token holders.
-* **Continuous Peg**: Stabilizes around $1 through Mint/Redeem mechanisms and arbitrage via external DEXs.
-* **Unified Liquidity**: All users share the same pool, preventing liquidity fragmentation.
-* **Self-Stabilizing Mechanism**: Dynamically controls Mint/Redeem and fees based on system indicators (CR, BR, PD).
+- **No Liquidation**: Positions are not force-liquidated during price declines; the Hyper Stability Module absorbs losses across the protocol (including the Stability Pool) and HYPE Token holders.
+- **Continuous Peg**: Stabilizes around $1 through Mint/Redeem mechanisms and arbitrage via external DEXs.
+- **Unified Liquidity**: All users share the same pool, preventing liquidity fragmentation.
+- **Self-Stabilizing Mechanism**: Dynamically controls Mint/Redeem and fees based on system indicators (CR, BR, PD).
 
 ---
 
@@ -47,11 +47,11 @@ These processes execute fully on-chain, with all transactions recorded as event 
 
 hzUSD price stability is maintained through three layers:
 
-| Layer     | Mechanism               | Effect                                                 |
-| --------- | ----------------------- | ------------------------------------------------------ |
-| Primary   | Mint/Redeem at $1       | Direct arbitrage opportunity when price deviates from peg |
-| Secondary | Dynamic Fee Adjustment  | Suppresses excessive issuance/redemption based on CR and PD |
-| Tertiary  | DEX Arbitrage           | Market participants profit from price deviation, naturally restoring peg |
+| Layer     | Mechanism              | Effect                                                                   |
+| --------- | ---------------------- | ------------------------------------------------------------------------ |
+| Primary   | Mint/Redeem at $1      | Direct arbitrage opportunity when price deviates from peg                |
+| Secondary | Dynamic Fee Adjustment | Suppresses excessive issuance/redemption based on CR and PD              |
+| Tertiary  | DEX Arbitrage          | Market participants profit from price deviation, naturally restoring peg |
 
 This triple-layered structure maintains the peg even during short-term market distortions or collateral fluctuations.
 
@@ -63,9 +63,9 @@ In typical CDP models, liquidation triggers when collateral value falls below a 
 
 **Socialized Loss Absorption**
 
-* When CR falls below a certain threshold due to price shocks, the Stability Pool automatically activates
-* hzUSD in the Stability Pool is automatically burned and receives bullHYPE, balancing the bullHYPE and hzUSD within the overall Collateral Pool
-* As a result, losses are thinly distributed across the system, eliminating the need for individual position liquidations
+- When CR falls below a certain threshold due to price shocks, the Stability Pool automatically activates
+- hzUSD in the Stability Pool is automatically burned and receives bullHYPE, balancing the bullHYPE and hzUSD within the overall Collateral Pool
+- As a result, losses are thinly distributed across the system, eliminating the need for individual position liquidations
 
 This mechanism fundamentally differs from existing DeFi liquidation structures in that forced selling does not occur during market crashes, maintaining a stable peg.
 
@@ -111,9 +111,9 @@ Here, CR (Coverage Ratio) is an indicator representing the health of the Collate
 
 Fees are dynamically determined based on peg deviation and collateral conditions.
 
-* **CR (Coverage Ratio)**: Fee increases as collateral capacity decreases
-* **PD (Peg Deviation)**: Fee increases as peg deviation grows
-* **Mode**: During Volatile/Halt modes, issuance is restricted and redemption is prioritized
+- **CR (Coverage Ratio)**: Fee increases as collateral capacity decreases
+- **PD (Peg Deviation)**: Fee increases as peg deviation grows
+- **Mode**: During Volatile/Halt modes, issuance is restricted and redemption is prioritized
 
 These multiple parameters automatically suppress mass issuance and excessive redemption, maintaining the hzUSD price peg.
 

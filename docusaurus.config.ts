@@ -52,6 +52,11 @@ const config: Config = {
 
   themeConfig: {
     image: 'img/hypezion-social-card.png',
+    colorMode: {
+      defaultMode: 'dark',
+      disableSwitch: false,
+      respectPrefersColorScheme: false,
+    },
     navbar: {
       title: 'Hypezion Finance',
       logo: {
@@ -66,12 +71,12 @@ const config: Config = {
           label: 'Documentation',
         },
         {
-          href: 'https://app.hypezion.com/',
+          href: 'https://hypezion.com/',
           label: 'Launch App',
           position: 'right',
         },
         {
-          href: 'https://github.com/hypezion',
+          href: 'https://github.com/zion-lab-pjt/hypezion-contract',
           label: 'GitHub',
           position: 'right',
         },
@@ -99,11 +104,7 @@ const config: Config = {
             {
               label: 'Twitter',
               href: 'https://twitter.com/hypezion',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discord.gg/hypezion',
-            },
+            }
           ],
         },
         {
@@ -111,7 +112,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/hypezion',
+              href: 'https://github.com/zion-lab-pjt/hypezion-contract',
             },
           ],
         },
