@@ -9,7 +9,7 @@ const config: Config = {
   tagline: 'Stability without Liquidation. Leverage without Funding.',
   favicon: 'img/favicon.png',
 
-  url: 'https://docs.hypezion.finance',
+  url: 'https://docs.hypezion.com',
   baseUrl: '/',
 
   organizationName: 'hypezion',

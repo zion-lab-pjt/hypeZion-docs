@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://docs.hypezion.finance/sitemap.xml
+Sitemap: https://docs.hypezion.com/sitemap.xml
