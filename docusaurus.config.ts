@@ -50,8 +50,44 @@ const config: Config = {
     ],
   ],
 
+  headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        property: 'og:type',
+        content: 'website',
+      },
+    },
+    {
+      tagName: 'meta',
+      attributes: {
+        property: 'og:site_name',
+        content: 'Hypezion Finance Documentation',
+      },
+    },
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'twitter:card',
+        content: 'summary_large_image',
+      },
+    },
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'twitter:site',
+        content: '@0xHypezion',
+      },
+    },
+  ],
+
   themeConfig: {
-    image: 'img/hypezion-social-card.png',
+    image: 'img/hypezion-finance-protocol-docs-ogp.png',
+    metadata: [
+      {name: 'keywords', content: 'DeFi, stablecoin, leverage, Hyperliquid, HYPE, hzUSD, bullHYPE, no liquidation'},
+      {name: 'description', content: 'Official documentation for Hypezion Finance - a DeFi protocol offering no-liquidation stablecoin (hzUSD) and leveraged tokens (bullHYPE) on Hyperliquid.'},
+      {property: 'og:description', content: 'Official documentation for Hypezion Finance - Stability without Liquidation. Leverage without Funding.'},
+    ],
     colorMode: {
       defaultMode: 'dark',
       disableSwitch: false,
