@@ -90,13 +90,13 @@ Leveraged HYPE Token (bullHYPE) is positioned as the highest-risk, highest-retur
 
 ---
 
-## 6. Mode Control and Safety
+## 6. Zone Control and Safety
 
-Since high leverage affects overall pool stability, the Modes & Ratios module constantly monitors conditions.
+Since high leverage affects overall pool stability, the Hyper Stability Module constantly monitors conditions through three system zones:
 
-* **Normal Mode**: CR is sufficiently high. Normal Mint/Redeem permitted.
-* **Volatile Mode**: Collateral price fluctuates sharply, exceeding volatility threshold. Mint restricted.
-* **Halt Mode**: CR falls below safety zone. All Mint/Redeem temporarily suspended; SP buffer activated.
+* **Healthy Zone** (CR ≥ 150%): System healthy. Normal Mint/Redeem permitted with standard fees (0.3%).
+* **Cautious Zone** (130% ≤ CR < 150%): Increased monitoring. Reduced fees (0.2%) encourage redemptions.
+* **Critical Zone** (CR < 130%): High alert. Minimal fees (0.1%), Stability Pool intervention may trigger to convert hzUSD to bullHYPE.
 
 This prevents excessive issuance of Leveraged HYPE Token (bullHYPE) and unstable leverage expansion, controlling system-wide risk within a certain range.
 

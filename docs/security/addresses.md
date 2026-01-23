@@ -7,16 +7,33 @@ title: Addresses
 
 All Hypezion Finance smart contracts are deployed on HyperEVM. Below are the official contract addresses.
 
+## Core Contracts
+
 | Name                        | Address                                      |
 | --------------------------- | -------------------------------------------- |
-| hzUSD                       | `0x16b468610D2B1D5ffD31ffB6644D55e2Cee4D8D8` |
-| bullHYPE                    | `0x52b115236A25De6719Cc5Faf6096146af5bb8CaA` |
-| stakedHzusd                 | `0x68924019F6E16fc41e829Ab3b73A1b67007D6dD9` |
-| hypezionVault               | `0x93D9Ba346a1B769039AB8903BEB58E44DFBcE3A5` |
-| hypezionExchange            | `0xd5E641cA8958a7F89Ed578D3A6FfF552442d7008` |
-| hypezionExchangeInformation | `0xcd2F0E34D5B5816a0541a4ae0F6A9F0B0DE63855` |
-| kinetiq                     | `0x73C85edA06457Ff3C336a9695C33060F788622E9` |
-| kinetiqYieldManager         | `0xF282b9Be1062e80BB21191c30652d3e7DD9f59B6` |
-| oracleAggregator            | `0xA8d1029eA311Be87b1468E4106C25da4137c7aF0` |
-| redstoneAdapter             | `0x498B880D0537DD08C29242E79Fc88b6AdaeB4A5C` |
-| hyperCoreAdapter            | `0x6Ecad6A243167058f460F255D114cFb50e869903` |
+| hzUSD                       | `0x6E2ade6FFc94d24A81406285c179227dfBFc97CE` |
+| bullHYPE                    | `0x12cF926C3884dda144e18E11e2659c0675cF20eA` |
+| stakedHzUSD                 | `0xce01a9B9bc08f0847fb745044330Eff1181360Cd` |
+| hypezionVault               | `0xEFA2EeA21Cea9466a0b0f25820953BcAeeC3fF6d` |
+| hypezionExchange            | `0x4A62a7A57D3DB0021A3D8BA069FaBE879228F492` |
+| hypezionExchangeInformation | `0x9286ABAC7c29e8A183155E961a4E4BBA2E162c7A` |
+
+## Integration Contracts
+
+| Name                     | Address                                      |
+| ------------------------ | -------------------------------------------- |
+| kinetiqIntegration       | `0xdBF7a15CF689358382E1b0c78F8B67f715Fade69` |
+| kinetiqYieldManager      | `0xF7b35322f83bb50B7e53bfd917215ADc959c8167` |
+| kyberSwapDexIntegration  | `0x26266434F11bC30cEAf92Ef22bF0a93F9ACF0183` |
+
+## Oracle Contracts
+
+| Name              | Address                                      |
+| ----------------- | -------------------------------------------- |
+| oracleAggregator  | `0x6240332663c48c937d0e9Ef0b0503b589088d395` |
+| hyperCoreAdapter  | `0x1B597Eb04932D6F71BC2604069D4B386bFD6bb6F` |
+| redstoneAdapter   | `0xFB9c534D78bDe9482A7502AE1bEC45457f65cC65` |
+
+---
+
+*Last updated: 2026-01-20*

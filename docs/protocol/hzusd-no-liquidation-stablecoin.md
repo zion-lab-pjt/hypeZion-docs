@@ -113,7 +113,7 @@ Fees are dynamically determined based on peg deviation and collateral conditions
 
 - **CR (Coverage Ratio)**: Fee increases as collateral capacity decreases
 - **PD (Peg Deviation)**: Fee increases as peg deviation grows
-- **Mode**: During Volatile/Halt modes, issuance is restricted and redemption is prioritized
+- **Mode**: During Critical/Emergency modes, fees are reduced to encourage redemptions, and Stability Pool intervention may activate
 
 These multiple parameters automatically suppress mass issuance and excessive redemption, maintaining the hzUSD price peg.
 
