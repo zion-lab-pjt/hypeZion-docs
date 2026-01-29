@@ -7,21 +7,21 @@ title: Hyper Stability Module
 
 The Hyper Stability Module is the stability control layer of Hypezion Finance. It monitors system-wide health in real-time and automatically adjusts operations such as issuance volume, redemption speed, and fees as needed.
 
-This module switches the protocol's state into "modes" in response to collateral price fluctuations and market volatility, applying different parameter settings (ratios) for each mode to realize a self-stabilizing mechanism even within a no-liquidation structure.
+This module switches the protocol's state based on the Coverage Ratio (CR), applying different fee settings for each zone to realize a self-stabilizing mechanism even within a no-liquidation structure.
 
 ---
 
-## 1. Mode Overview
+## 1. System Zones Overview
 
-Hypezion Finance always operates in one of the following three modes:
+Hypezion Finance operates in three distinct zones based on Coverage Ratio:
 
-| Mode          | State                                        | Primary Behavior                                                      |
-| ------------- | -------------------------------------------- | --------------------------------------------------------------------- |
-| Normal Mode   | Market stable, CR sufficiently high          | Normal Mint/Redeem, minimized fees                                    |
-| Volatile Mode | Volatility rising, peg deviation expanding   | Mint restricted, Redeem prioritized, fees increased                   |
-| Halt Mode     | Collateral crashes, CR falls below threshold | All Mint/Redeem temporarily suspended, SP automatic defense activated |
+| Zone          | CR Range         | Primary Behavior                                             |
+| ------------- | ---------------- | ------------------------------------------------------------ |
+| Healthy Zone  | CR ≥ 150%        | Normal Mint/Redeem, standard fees (0.3%)                     |
+| Cautious Zone | 130% ≤ CR < 150% | Reduced fees (0.2%) to encourage redemptions and restore CR  |
+| Critical Zone | CR < 130%        | Minimal fees (0.1%), Stability Pool intervention may trigger |
 
-These modes are designed to transition continuously, with each mode switch automatically executed based on on-chain defined monitoring indicators (Ratios).
+These zones transition automatically based on the Coverage Ratio, with each change recorded as on-chain events.
 
 ---
 
@@ -30,20 +30,21 @@ These modes are designed to transition continuously, with each mode switch autom
 **(1) Coverage Ratio (CR)**
 
 $$
-CR = \frac{\text{Collateral TVL}}{\text{hzUSD Supply}}
+CR = \frac{\text{Total Reserve in HYPE}}{\text{hzUSD Liabilities in HYPE}} \times 100\%
 $$
 
-* Basic indicator showing system-wide collateral health.
-* Issuance restricted below 100%, transitions to Volatile Mode around 90%.
+- Core indicator showing system-wide collateral health.
+- Determines the current system zone and fee structure.
+- Calculated using available reserves plus locked kHYPE pending redemptions.
 
 **(2) Buffer Ratio (BR)**
 
 $$
-BR = \frac{\text{Collateral TVL} - \text{hzUSD Supply}}{\text{Collateral TVL}}
+BR = \frac{\text{Collateral TVL} - \text{shzUSD Supply}}{\text{Collateral TVL}}
 $$
 
-* Indicator representing residual collateral proportion, directly linked to bullHYPE risk tolerance.
-* When declining, bullHYPE issuance is restricted and shzUSD reward ratio increases.
+- Indicator representing residual collateral proportion, directly linked to bullHYPE risk tolerance.
+- When declining, bullHYPE issuance is restricted and shzUSD reward ratio increases.
 
 **(3) Peg Deviation (PD)**
 
@@ -51,8 +52,8 @@ $$
 PD = |P_{hzUSD} - 1.00|
 $$
 
-* Deviation rate showing how far hzUSD market price is from the peg ($1).
-* When PD exceeds threshold, fees and caps are dynamically adjusted.
+- Deviation rate showing how far hzUSD market price is from the peg ($1).
+- When PD exceeds threshold, fees and caps are dynamically adjusted.
 
 **(4) Oracle Confidence (OC)**
 
@@ -60,8 +61,8 @@ $$
 OC = 1 - \frac{|\text{Primary} - \text{Fallback}|}{\text{Primary}}
 $$
 
-* Indicator measuring agreement between oracles.
-* When OC falls below a certain value, automatically transitions to Volatile Mode and temporarily restricts new Mints.
+- Indicator measuring agreement between oracles.
+- The OracleAggregator uses weighted median from multiple sources (HyperCore, Pyth, RedStone, Chainlink).
 
 **(5) Utilization (U)**
 
@@ -69,73 +70,100 @@ $$
 U = \frac{\text{hzUSD Supply}}{\text{hzUSD Cap}}
 $$
 
-* Utilization rate against hzUSD issuance cap.
-* If too high, fees automatically increase and Mint suppression is applied.
+- Utilization rate against hzUSD issuance cap.
+- If too high, fees automatically increase and Mint suppression is applied.
 
 ---
 
-## 3. Mode Transition Logic
+## 3. Zone Transition Logic
 
-Modes automatically change based on composite conditions of the above indicators.
+Zones automatically change based on the Coverage Ratio (CR):
 
 $$
 \begin{aligned}
-&\text{if } CR > 110\% \text{ and } PD < 0.005 \Rightarrow \text{Normal Mode} \\
-&\text{if } 95\% \leq CR \leq 110\% \text{ or } PD \geq 0.005 \Rightarrow \text{Volatile Mode} \\
-&\text{if } CR < 95\% \text{ or } OC < 0.9 \Rightarrow \text{Halt Mode}
+&\text{if } CR \geq 150\% \Rightarrow \text{Healthy Zone} \\
+&\text{if } 130\% \leq CR < 150\% \Rightarrow \text{Cautious Zone} \\
+&\text{if } CR < 130\% \Rightarrow \text{Critical Zone}
 \end{aligned}
 $$
 
-**Normal → Volatile**
+**Healthy → Cautious**
 
-* When CR declines or peg deviation exceeds a certain level
-* New Mints partially restricted, Redeem prioritized
+- When CR declines below 150%
+- Fees reduced to encourage redemptions and restore CR
 
-**Volatile → Halt**
+**Cautious → Critical**
 
-* When Collateral crashes and CR falls below threshold
-* All issuance stopped, Stability Pool automatically activated
+- When CR falls below 130%
+- Stability Pool intervention (`triggerIntervention`) becomes available
+- Protocol converts hzUSD from Stability Pool to bullHYPE to reduce liabilities
 
-**Halt → Normal**
+**Recovery Path**
 
-* When CR and OC recover and PD returns below threshold
-* All operations resumed
-
----
-
-## 4. Dynamic Parameter Adjustment
-
-In each mode, the following parameters are automatically reconfigured:
-
-| Parameter           | Normal | Volatile   | Halt                |
-| ------------------- | ------ | ---------- | ------------------- |
-| Mint Fee            | 0.1%   | 0.5%~1.0%  | Stopped             |
-| Redeem Fee          | 0.1%   | 0.2%       | Stopped             |
-| Mint Cap            | 100%   | 60~80%     | 0%                  |
-| Oracle Trust Weight | 1.0    | 0.7        | 0.3                 |
-| SP Activation       | Low    | Medium     | High (auto-trigger) |
-
-This ensures the protocol always maintains behavior that "prioritizes health over liquidity."
+- When CR recovers above 150%, protocol can call `exitRecoveryMode`
+- Converts bullHYPE back to hzUSD, restoring normal Stability Pool composition
 
 ---
 
-## 5. Autonomous Stability Loop
+## 4. Dynamic Fee Model
 
-Modes & Ratios is the core circuit for realizing system autonomy and stability.
+Fees are dynamically determined based on system zone (inverse relationship with CR):
+
+| Zone     | CR Range    | Mint/Redeem Fee | Swap Fee | Rationale                            |
+| -------- | ----------- | --------------- | -------- | ------------------------------------ |
+| Healthy  | ≥ 150%      | 0.3%            | 0.8%     | Standard operation, sustainable fees |
+| Cautious | 130% - 150% | 0.2%            | 0.8%     | Lower fees encourage redemptions     |
+| Critical | < 130%      | 0.1%            | 0.8%     | Minimal fees to maximize redemptions |
+
+**Key Design Principle**: Lower fees when CR is low encourages users to redeem, which burns hzUSD and helps restore CR. This is the opposite of traditional models that increase fees during stress.
+
+---
+
+## 5. Stability Pool Intervention
+
+When CR falls below 130% (Critical Zone), the protocol can trigger an intervention:
+
+**`triggerIntervention()` Function**:
+
+1. Calculates the amount of hzUSD liability reduction needed to restore CR to ~140%
+2. Burns hzUSD from the Stability Pool
+3. Mints equivalent bullHYPE to Stability Pool holders
+4. Reduces system liabilities, improving CR
+
+**`exitRecoveryMode()` Function**:
+
+1. Available when CR recovers to ≥ 150%
+2. Converts bullHYPE held by Stability Pool back to hzUSD
+3. Restores normal Stability Pool composition
+
+This mechanism ensures the protocol can autonomously defend its peg without requiring external intervention.
+
+---
+
+## 6. Autonomous Stability Loop
+
+The Hyper Stability Module forms a self-stabilizing feedback loop:
 
 $$
 \begin{aligned}
-&CR \downarrow \Rightarrow \text{Mint restricted \& Fee increases} \Rightarrow \text{Supply decreases} \Rightarrow CR \uparrow \\
-&PD \uparrow \Rightarrow \text{Redeem promoted \& Cap adjusted} \Rightarrow \text{Price reverts} \Rightarrow PD \downarrow
+&CR \downarrow \Rightarrow \text{Fees decrease} \Rightarrow \text{Redemptions encouraged} \Rightarrow \text{Supply decreases} \Rightarrow CR \uparrow \\
+&CR \uparrow \Rightarrow \text{Fees normalize} \Rightarrow \text{Mints enabled} \Rightarrow \text{Supply stabilizes}
 \end{aligned}
+$$
+
+Additionally, when CR < 130%:
+
+$$
+\text{Stability Pool Intervention} \Rightarrow \text{hzUSD burned} \Rightarrow \text{Liabilities reduced} \Rightarrow CR \uparrow
 $$
 
 Through this feedback control, the peg is maintained without external operations.
 
 ---
 
-## 6. On-Chain Operation
+## 7. On-Chain Operation
 
-* Monitoring logic periodically retrieves feeds from the Oracle Layer and updates ratios.
-* Mode transitions are executed via automatic triggers, with all changes recorded in event logs.
-* Each state change (ModeChanged, RatioUpdated) is verifiable as an open audit log.
+- Zone transitions are executed automatically via `_updateSystemState()` after each mint/redeem operation.
+- All state changes emit `SystemStateChanged(uint8 newState)` events for monitoring.
+- Emergency alerts emit `EmergencyStateActivated(uint256 cr)` when CR falls below 100%.
+- Each ratio is verifiable through view functions (`getSystemCR()`, `getCurrentFee()`).
